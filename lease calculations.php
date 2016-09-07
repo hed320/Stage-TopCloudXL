@@ -98,13 +98,19 @@
         $tot_Prices[4] = calc_quarterly_prizes($tot_Prices[2], $tot_Prices[3]);
         $tot_Prices[5] = calc_monthly($tot_Prices[4]);
         $tot_Prices[6] = calc_round_monthly($tot_Prices[5]);
+
+        //convert to json
+        $filename = $itemname.'.json';
+        $fp = fopen($filename, 'w');
+        fwrite($fp, json_encode($tot_Prices));
+        fclose($fp);
     };
 
     // If POST itemprice isset start calculation
     if (isset($_POST["itemprice"])) {
         calc_prizes($_POST["itemname"], $_POST["itemprice"]);
     };
-    var_dump($tot_Prices);
+
     ?>
 </head>
 <body>
@@ -159,6 +165,15 @@
             <br>
             <label for="roundmonthly60">Monthly 60 months round :</label>
             <input type="text" id="roundmonthly60" value="<?php echo "€".$tot_Prices[6][3]; ?>" readonly>
+            <?php
+                if (isset($_POST["itemname"]) and isset($_POST["itemprice"])) {
+                    echo "<br>";
+                    echo '<a href="'.$_POST["itemname"].'.json">JSON</a>';
+                } else if (isset($_POST["itemprice"])) {
+                    echo "<br>";
+                    echo '<a href="unknown.json">JSON</a>';
+                }
+                ?>
     </form>
 </body>
 </html>
