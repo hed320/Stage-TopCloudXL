@@ -46,6 +46,8 @@
             return 5;
         } else if ($itemprice >= 50000) {
             return 6;
+        } else {
+            die("Factor not in range");
         }
     };
 
