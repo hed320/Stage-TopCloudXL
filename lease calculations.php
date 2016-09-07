@@ -16,25 +16,25 @@
     $tot_Prices = array("Item name", "Buy price", "Sales price", "Factor", "Margin", "Insurance", "Monthly costs",
         array("Quarterly", "24", "36", "48", "60"),
         array("Monthly", "24", "36", "48", "60"),
-        array("Monthly Round", "24", "36", "48", "60"),
+        array("Monthly Round", "24", "36", "48", "60")
     );
 
     function calc_sales_price ($buyprice, $margin) {
         return $buyprice * $margin;
     };
 
-    function get_factor ($itemprice) {
-        if ($itemprice >= 1000 and $itemprice <= 2500) {
+    function get_factor ($buyprice) {
+        if ($buyprice >= 1000 and $buyprice <= 2500) {
             return 1;
-        } else if ($itemprice >= 2500 and $itemprice <= 5000) {
+        } else if ($buyprice >= 2500 and $buyprice <= 5000) {
             return 2;
-        } else if ($itemprice >= 5000 and $itemprice <=  10000) {
+        } else if ($buyprice >= 5000 and $buyprice <=  10000) {
             return 3;
-        } else if ($itemprice >= 10000 and $itemprice <= 25000) {
+        } else if ($buyprice >= 10000 and $buyprice <= 25000) {
             return 4;
-        } else if ($itemprice >= 25000 and $itemprice <=  50000) {
+        } else if ($buyprice >= 25000 and $buyprice <=  50000) {
             return 5;
-        } else if ($itemprice >= 50000) {
+        } else if ($buyprice >= 50000) {
             return 6;
         } else {
             die("Factor not in range");
@@ -99,7 +99,7 @@
         fclose($fp);
     };
 
-    // If POST itemprice isset start calculation
+    // If POST buyprice isset start calculation
     if (isset($_POST["buyprice"])) {
         calc_prizes($_POST["itemname"], $_POST["buyprice"], $_POST["margin"], $_POST["insurance"], $_POST["monthlycosts"]);
     };
@@ -177,7 +177,7 @@
             <label for="roundmonthly60">Monthly 60 months :</label>
             <input type="text" id="roundmonthly60" value="<?php echo "€".$tot_Prices[9][3]; ?>" readonly>
             <?php
-                if (isset($_POST["itemname"]) and isset($_POST["itemprice"])) {
+                if (isset($_POST["itemname"]) and isset($_POST["buyprice"])) {
                     echo "<br>";
                     echo '<a href="'.$_POST["itemname"].'.json">JSON</a>';
                 }
