@@ -12,24 +12,14 @@
         array(60, 6.228, 5.94, 5.735, 5.665, 5.621, 5.596),
     );
 
-    //Profit margin
-    $margin = 1.5;
-
-    //Insurance
-    $insurance = 349;
-
-    //Additional monthly costs
-    $monthly_Costs = 5;
-
     //When done calculating the array will be filled with the correct values
-    $tot_Prices = array("Item name", "Item price", "Sales price", "Factor",
+    $tot_Prices = array("Item name", "Buy price", "Sales price", "Factor", "Margin", "Insurance", "Monthly costs",
         array("Quarterly", "24", "36", "48", "60"),
         array("Monthly", "24", "36", "48", "60"),
-        array("Montly Round", "24", "36", "48", "60"),
+        array("Monthly Round", "24", "36", "48", "60"),
     );
 
-    function calc_sales_price ($itemprice) {
-        global $margin;
+    function calc_sales_price ($itemprice, $margin) {
         return $itemprice * $margin;
     };
 
@@ -52,9 +42,7 @@
     };
 
     //Quarterly (Sales price+Insurance+(Run time*Monthly costs))*Factor/100
-    function calc_quarterly_prizes ($sales_Price, $factornum) {
-        global $insurance;
-        global $monthly_Costs;
+    function calc_quarterly_prizes ($sales_Price, $factornum, $insurance, $monthly_Costs) {
         global $factor;
         $quarterly = array();
         for ($x = 24; $x <= 60; ) {
@@ -91,15 +79,18 @@
         return $monthly_rounded;
     };
 
-    function calc_prizes ($itemname, $itemprice) {
+    function calc_prizes ($itemname, $itemprice, $margin, $insurance, $monthlycosts) {
         global $tot_Prices;
         $tot_Prices[0] = $itemname;
         $tot_Prices[1] = floatval($itemprice);
-        $tot_Prices[2] = round(calc_sales_price($itemprice), 2);
+        $tot_Prices[2] = round(calc_sales_price($itemprice, $margin), 2);
         $tot_Prices[3] = get_factor($tot_Prices[2]);
-        $tot_Prices[4] = calc_quarterly_prizes($tot_Prices[2], $tot_Prices[3]);
-        $tot_Prices[5] = calc_monthly($tot_Prices[4]);
-        $tot_Prices[6] = calc_round_monthly($tot_Prices[5]);
+        $tot_Prices[4] = floatval($margin);
+        $tot_Prices[5] = floatval($insurance);
+        $tot_Prices[6] = floatval($monthlycosts);
+        $tot_Prices[7] = calc_quarterly_prizes($tot_Prices[2], $tot_Prices[3], $tot_Prices[5], $tot_Prices[6]);
+        $tot_Prices[8] = calc_monthly($tot_Prices[7]);
+        $tot_Prices[9] = calc_round_monthly($tot_Prices[8]);
 
         //convert to json
         $filename = $itemname.'.json';
@@ -110,67 +101,81 @@
 
     // If POST itemprice isset start calculation
     if (isset($_POST["itemprice"])) {
-        if (!isset($_POST["itemname"])) {
-            calc_prizes("Unknown itemname", $_POST["itemprice"]);
-        } else {
-            calc_prizes($_POST["itemname"], $_POST["itemprice"]);
-        };
+        calc_prizes($_POST["itemname"], $_POST["itemprice"], $_POST["margin"], $_POST["insurance"], $_POST["monthlycosts"]);
     };
-
     ?>
 </head>
 <body>
     <form action="lease calculations.php" method="post">
         <label for="itemname">Name: </label>
-        <input type="text" id="itemname" name="itemname"><br>
+        <input type="text" id="itemname" name="itemname" required><br>
         <label for="itemprice">Price: </label>
-        <input type="number" id="itemprice" name="itemprice" step="0.01"><br>
+        <input type="number" id="itemprice" name="itemprice" step="0.01" required><br>
+        <label for="margin">Margin: </label>
+        <input type="number" id="margin" name="margin" step="0.01" placeholder="150% = 1.5" required><br>
+        <label for="insurance">Insurance: </label>
+        <input type="number" id="insurance" name="insurance" step="0.01" required><br>
+        <label for="monthlycosts">Monthly costs: </label>
+        <input type="number" id="monthlycosts" name="monthlycosts" step="0.01" required><br>
         <input type="submit">
     </form>
     <br>
     <form>
             <label for="itemname">Item name: </label>
             <input type="text" id="itemname" value="<?php echo $tot_Prices[0]; ?>" readonly>
-            <label for="itemprice">Item price: </label>
+            <br>
+            <label for="itemprice">Buy price: </label>
             <input type="text" id="itemprice" value="<?php echo "€".$tot_Prices[1]; ?>" readonly>
+            <br>
             <label for="salesprice">Sales price: </label>
             <input type="text" id="salesprice" value="<?php echo "€".$tot_Prices[2]; ?>" readonly>
             <br>
+            <label for="margin">Profit margin: </label>
+            <input type="text" id="margin" value="<?php echo $tot_Prices[4]; ?>" readonly>
+            <br>
+            <label for="insurance">Insurance: </label>
+            <input type="text" id="insurance" value="<?php echo "€".$tot_Prices[5]; ?>" readonly>
+            <br>
+            <label for="monthlycosts">Monthly costs: </label>
+            <input type="text" id="monthlycosts" value="<?php echo "€".$tot_Prices[6]; ?>" readonly>
+            <br>
+            <!--
             <label for="quarterly24">Quarterly 24 months :</label>
-            <input type="text" id="quarterly24" value="<?php echo "€".$tot_Prices[4][0]; ?>" readonly>
+            <input type="text" id="quarterly24" value="<?php echo "€".$tot_Prices[7][0]; ?>" readonly>
             <br>
             <label for="quarterly36">Quarterly 36 months :</label>
-            <input type="text" id="quarterly36" value="<?php echo "€".$tot_Prices[4][1]; ?>" readonly>
+            <input type="text" id="quarterly36" value="<?php echo "€".$tot_Prices[7][1]; ?>" readonly>
             <br>
             <label for="quarterly48">Quarterly 48 months :</label>
-            <input type="text" id="quarterly48" value="<?php echo "€".$tot_Prices[4][2]; ?>" readonly>
+            <input type="text" id="quarterly48" value="<?php echo "€".$tot_Prices[7][2]; ?>" readonly>
             <br>
             <label for="quarterly60">Quarterly 60 months :</label>
-            <input type="text" id="quarterly60" value="<?php echo "€".$tot_Prices[4][3]; ?>" readonly>
+            <input type="text" id="quarterly60" value="<?php echo "€".$tot_Prices[7][3]; ?>" readonly>
             <br>
             <label for="monthly24">Monthly 24 months :</label>
-            <input type="text" id="monthly24" value="<?php echo "€".$tot_Prices[5][0]; ?>" readonly>
+            <input type="text" id="monthly24" value="<?php echo "€".$tot_Prices[8][0]; ?>" readonly>
             <br>
             <label for="monthly36">Monthly 36 months :</label>
-            <input type="text" id="monthly36" value="<?php echo "€".$tot_Prices[5][1]; ?>" readonly>
+            <input type="text" id="monthly36" value="<?php echo "€".$tot_Prices[8][1]; ?>" readonly>
             <br>
             <label for="monthly48">Monthly 48 months :</label>
-            <input type="text" id="monthly48" value="<?php echo "€".$tot_Prices[5][2]; ?>" readonly>
+            <input type="text" id="monthly48" value="<?php echo "€".$tot_Prices[8][2]; ?>" readonly>
             <br>
             <label for="monthly60">Monthly 60 months :</label>
-            <input type="text" id="monthly60" value="<?php echo "€".$tot_Prices[5][3]; ?>" readonly>
+            <input type="text" id="monthly60" value="<?php echo "€".$tot_Prices[8][3]; ?>" readonly>
+            -->
             <br>
-            <label for="roundmonthly24">Monthly 24 months round :</label>
-            <input type="text" id="roundmonthly24" value="<?php echo "€".$tot_Prices[6][0]; ?>" readonly>
+            <label for="roundmonthly24">Monthly 24 months :</label>
+            <input type="text" id="roundmonthly24" value="<?php echo "€".$tot_Prices[9][0]; ?>" readonly>
             <br>
-            <label for="roundmonthly36">Monthly 36 months round :</label>
-            <input type="text" id="roundmonthly36" value="<?php echo "€".$tot_Prices[6][1]; ?>" readonly>
+            <label for="roundmonthly36">Monthly 36 months :</label>
+            <input type="text" id="roundmonthly36" value="<?php echo "€".$tot_Prices[9][1]; ?>" readonly>
             <br>
-            <label for="roundmonthly48">Monthly 48 months round :</label>
-            <input type="text" id="roundmonthly48" value="<?php echo "€".$tot_Prices[6][2]; ?>" readonly>
+            <label for="roundmonthly48">Monthly 48 months :</label>
+            <input type="text" id="roundmonthly48" value="<?php echo "€".$tot_Prices[9][2]; ?>" readonly>
             <br>
-            <label for="roundmonthly60">Monthly 60 months round :</label>
-            <input type="text" id="roundmonthly60" value="<?php echo "€".$tot_Prices[6][3]; ?>" readonly>
+            <label for="roundmonthly60">Monthly 60 months :</label>
+            <input type="text" id="roundmonthly60" value="<?php echo "€".$tot_Prices[9][3]; ?>" readonly>
             <?php
                 if (isset($_POST["itemname"]) and isset($_POST["itemprice"])) {
                     echo "<br>";
