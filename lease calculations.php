@@ -21,6 +21,7 @@
     //Additional monthly costs
     $monthly_Costs = 5;
 
+    //When done calculating the array will be filled with the correct values
     $tot_Prices = array("Item name", "Item price", "Sales price", "Factor",
         array("Quarterly", "24", "36", "48", "60"),
         array("Monthly", "24", "36", "48", "60"),
@@ -99,10 +100,11 @@
         $tot_Prices[6] = calc_round_monthly($tot_Prices[5]);
     };
 
-    // If itemprice isset start calculation
+    // If POST itemprice isset start calculation
     if (isset($_POST["itemprice"])) {
         calc_prizes($_POST["itemname"], $_POST["itemprice"]);
     };
+    var_dump($tot_Prices);
     ?>
 </head>
 <body>
