@@ -125,37 +125,37 @@
             <label for="quarterly24">Quarterly 24 months :</label>
             <input type="text" id="quarterly24" value="<?php echo "€".$tot_Prices[4][0]; ?>" readonly>
             <br>
-            <label for="quarterly24">Quarterly 36 months :</label>
+            <label for="quarterly36">Quarterly 36 months :</label>
             <input type="text" id="quarterly36" value="<?php echo "€".$tot_Prices[4][1]; ?>" readonly>
             <br>
-            <label for="quarterly24">Quarterly 48 months :</label>
+            <label for="quarterly48">Quarterly 48 months :</label>
             <input type="text" id="quarterly48" value="<?php echo "€".$tot_Prices[4][2]; ?>" readonly>
             <br>
-            <label for="quarterly24">Quarterly 60 months :</label>
+            <label for="quarterly60">Quarterly 60 months :</label>
             <input type="text" id="quarterly60" value="<?php echo "€".$tot_Prices[4][3]; ?>" readonly>
             <br>
-            <label for="quarterly24">Monthly 24 months :</label>
+            <label for="monthly24">Monthly 24 months :</label>
             <input type="text" id="monthly24" value="<?php echo "€".$tot_Prices[5][0]; ?>" readonly>
             <br>
-            <label for="quarterly24">Monthly 36 months :</label>
+            <label for="monthly36">Monthly 36 months :</label>
             <input type="text" id="monthly36" value="<?php echo "€".$tot_Prices[5][1]; ?>" readonly>
             <br>
-            <label for="quarterly24">Monthly 48 months :</label>
+            <label for="monthly48">Monthly 48 months :</label>
             <input type="text" id="monthly48" value="<?php echo "€".$tot_Prices[5][2]; ?>" readonly>
             <br>
-            <label for="quarterly24">Monthly 60 months :</label>
+            <label for="monthly60">Monthly 60 months :</label>
             <input type="text" id="monthly60" value="<?php echo "€".$tot_Prices[5][3]; ?>" readonly>
             <br>
-            <label for="quarterly24">Monthly 24 months round :</label>
+            <label for="roundmonthly24">Monthly 24 months round :</label>
             <input type="text" id="roundmonthly24" value="<?php echo "€".$tot_Prices[6][0]; ?>" readonly>
             <br>
-            <label for="quarterly24">Monthly 36 months round :</label>
+            <label for="roundmonthly36">Monthly 36 months round :</label>
             <input type="text" id="roundmonthly36" value="<?php echo "€".$tot_Prices[6][1]; ?>" readonly>
             <br>
-            <label for="quarterly24">Monthly 48 months round :</label>
+            <label for="roundmonthly48">Monthly 48 months round :</label>
             <input type="text" id="roundmonthly48" value="<?php echo "€".$tot_Prices[6][2]; ?>" readonly>
             <br>
-            <label for="quarterly24">Monthly 60 months round :</label>
+            <label for="roundmonthly60">Monthly 60 months round :</label>
             <input type="text" id="roundmonthly60" value="<?php echo "€".$tot_Prices[6][3]; ?>" readonly>
     </form>
 </body>
