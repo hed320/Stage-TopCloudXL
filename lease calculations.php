@@ -19,8 +19,8 @@
         array("Monthly Round", "24", "36", "48", "60"),
     );
 
-    function calc_sales_price ($itemprice, $margin) {
-        return $itemprice * $margin;
+    function calc_sales_price ($buyprice, $margin) {
+        return $buyprice * $margin;
     };
 
     function get_factor ($itemprice) {
@@ -79,16 +79,16 @@
         return $monthly_rounded;
     };
 
-    function calc_prizes ($itemname, $itemprice, $margin, $insurance, $monthlycosts) {
+    function calc_prizes ($itemname, $buyprice, $margin, $insurance, $monthly_Costs) {
         global $tot_Prices;
         $tot_Prices[0] = $itemname;
-        $tot_Prices[1] = floatval($itemprice);
-        $tot_Prices[2] = round(calc_sales_price($itemprice, $margin), 2);
+        $tot_Prices[1] = floatval($buyprice);
+        $tot_Prices[2] = round(calc_sales_price($buyprice, $margin), 2);
         $tot_Prices[3] = get_factor($tot_Prices[2]);
         $tot_Prices[4] = floatval($margin);
         $tot_Prices[5] = floatval($insurance);
-        $tot_Prices[6] = floatval($monthlycosts);
-        $tot_Prices[7] = calc_quarterly_prizes($tot_Prices[2], $tot_Prices[3], $tot_Prices[5], $tot_Prices[6]);
+        $tot_Prices[6] = floatval($monthly_Costs);
+        $tot_Prices[7] = calc_quarterly_prizes($tot_Prices[2], $tot_Prices[3], $insurance, $monthly_Costs);
         $tot_Prices[8] = calc_monthly($tot_Prices[7]);
         $tot_Prices[9] = calc_round_monthly($tot_Prices[8]);
 
@@ -100,8 +100,8 @@
     };
 
     // If POST itemprice isset start calculation
-    if (isset($_POST["itemprice"])) {
-        calc_prizes($_POST["itemname"], $_POST["itemprice"], $_POST["margin"], $_POST["insurance"], $_POST["monthlycosts"]);
+    if (isset($_POST["buyprice"])) {
+        calc_prizes($_POST["itemname"], $_POST["buyprice"], $_POST["margin"], $_POST["insurance"], $_POST["monthlycosts"]);
     };
     ?>
 </head>
@@ -109,8 +109,8 @@
     <form action="lease calculations.php" method="post">
         <label for="itemname">Name: </label>
         <input type="text" id="itemname" name="itemname" required><br>
-        <label for="itemprice">Price: </label>
-        <input type="number" id="itemprice" name="itemprice" step="0.01" required><br>
+        <label for="buyprice">Buy price: </label>
+        <input type="number" id="buyprice" name="buyprice" step="0.01" required><br>
         <label for="margin">Margin: </label>
         <input type="number" id="margin" name="margin" step="0.01" placeholder="150% = 1.5" required><br>
         <label for="insurance">Insurance: </label>
@@ -121,16 +121,16 @@
     </form>
     <br>
     <form>
-            <label for="itemname">Item name: </label>
+            <label for="itemname">Name: </label>
             <input type="text" id="itemname" value="<?php echo $tot_Prices[0]; ?>" readonly>
             <br>
-            <label for="itemprice">Buy price: </label>
-            <input type="text" id="itemprice" value="<?php echo "€".$tot_Prices[1]; ?>" readonly>
+            <label for="buyprice">Buy price: </label>
+            <input type="text" id="buyprice" value="<?php echo "€".$tot_Prices[1]; ?>" readonly>
             <br>
             <label for="salesprice">Sales price: </label>
             <input type="text" id="salesprice" value="<?php echo "€".$tot_Prices[2]; ?>" readonly>
             <br>
-            <label for="margin">Profit margin: </label>
+            <label for="margin">Margin: </label>
             <input type="text" id="margin" value="<?php echo $tot_Prices[4]; ?>" readonly>
             <br>
             <label for="insurance">Insurance: </label>
