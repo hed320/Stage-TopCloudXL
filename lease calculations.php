@@ -44,6 +44,7 @@
     //Quarterly (Sales price+Insurance+(Run time*Monthly costs))*Factor/100
     function calc_quarterly_prizes ($sales_Price, $factornum, $insurance, $monthly_Costs) {
         global $factor;
+        global $tot_Prices;
         $quarterly = array();
         for ($x = 24; $x <= 60; ) {
             if ($x == 24) {
@@ -55,8 +56,8 @@
             } else if ($x == 60) {
                 $factortime = 3;
             }
-            $factorfloat = $factor[$factortime][$factornum];
-            array_push($quarterly, round((($sales_Price + $insurance + ($x * $monthly_Costs)) * $factorfloat / 100), 2));
+            $tot_Prices[3] = $factor[$factortime][$factornum];
+            array_push($quarterly, round((($sales_Price + $insurance + ($x * $monthly_Costs)) * $tot_Prices[3] / 100), 2));
             $x += 12;
         };
         return $quarterly;
