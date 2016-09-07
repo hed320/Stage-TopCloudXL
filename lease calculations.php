@@ -48,7 +48,7 @@
             return 6;
         } else {
             die("Factor not in range");
-        }
+        };
     };
 
     //Quarterly (Sales price+Insurance+(Run time*Monthly costs))*Factor/100
