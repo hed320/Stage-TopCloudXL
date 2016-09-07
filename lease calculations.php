@@ -108,7 +108,11 @@
 
     // If POST itemprice isset start calculation
     if (isset($_POST["itemprice"])) {
-        calc_prizes($_POST["itemname"], $_POST["itemprice"]);
+        if (!isset($_POST["itemname"])) {
+            calc_prizes("Unknown itemname", $_POST["itemprice"]);
+        } else {
+            calc_prizes($_POST["itemname"], $_POST["itemprice"]);
+        };
     };
 
     ?>
@@ -169,9 +173,6 @@
                 if (isset($_POST["itemname"]) and isset($_POST["itemprice"])) {
                     echo "<br>";
                     echo '<a href="'.$_POST["itemname"].'.json">JSON</a>';
-                } else if (isset($_POST["itemprice"])) {
-                    echo "<br>";
-                    echo '<a href="unknown.json">JSON</a>';
                 }
                 ?>
     </form>
