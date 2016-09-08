@@ -84,7 +84,7 @@
     function calc_round_monthly_vat ($monthly_Array, $vat) {
         $monthly_rounded_VAT = array();
         foreach ($monthly_Array as $value) {
-            array_push($monthly_rounded_VAT, intval(round($value * ((100 + $vat) / 100) , 0)));
+            array_push($monthly_rounded_VAT, floatval(round($value * ((100 + $vat) / 100) , 2)));
         }
         return $monthly_rounded_VAT;
     };
@@ -118,7 +118,7 @@
     ?>
 </head>
 <body>
-    <form action="lease calculations.php" method="post">
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
         <label for="itemname">Name: </label>
         <input type="text" id="itemname" name="itemname" required>
         <br>
