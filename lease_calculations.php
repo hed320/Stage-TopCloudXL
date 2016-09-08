@@ -25,7 +25,7 @@
     };
 
     function get_factor ($buyprice) {
-        if ($buyprice >= 1000 and $buyprice <= 2500) {
+        if ($buyprice <= 2500) {
             return 1;
         } else if ($buyprice >= 2500 and $buyprice <= 5000) {
             return 2;
@@ -126,7 +126,7 @@
         <input type="number" id="buyprice" name="buyprice" step="0.01" required>
         <br>
         <label for="margin">Margin: </label>
-        <input type="number" id="margin" name="margin" step="0.01" placeholder="150% = 1.5" required><br>
+        <input type="number" id="margin" name="margin" step="0.01" placeholder="150% = 1.5" value="1.5" required><br>
         <label for="insurance">Insurance: </label>
         <input type="number" id="insurance" name="insurance" step="0.01" required>
         <br>
