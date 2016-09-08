@@ -37,8 +37,6 @@
             return 5;
         } else if ($buyprice >= 50000) {
             return 6;
-        } else {
-            die("Factor not in range");
         };
     };
 
