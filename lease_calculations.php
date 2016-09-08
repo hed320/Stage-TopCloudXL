@@ -102,7 +102,7 @@
         $tot_Prices[8] = calc_quarterly_prizes($tot_Prices[2], $tot_Prices[3], $insurance, $monthly_Costs);
         $tot_Prices[9] = calc_monthly($tot_Prices[8]);
         $tot_Prices[10] = calc_round_monthly($tot_Prices[9]);
-        $tot_Prices[11] = calc_round_monthly_vat($tot_Prices[10], $vat);
+        $tot_Prices[11] = calc_round_monthly_vat($tot_Prices[9], $vat);
 
         //convert to json
         $filename = $itemname.'.json';
@@ -115,6 +115,7 @@
     if (isset($_POST["buyprice"])) {
         calc_prizes($_POST["itemname"], $_POST["buyprice"], $_POST["margin"], $_POST["insurance"], $_POST["monthlycosts"], $_POST["vat"]);
     };
+    var_dump($tot_Prices);
     ?>
 </head>
 <body>
