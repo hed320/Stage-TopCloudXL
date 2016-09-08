@@ -138,7 +138,7 @@
         <input type="radio" id="vat" name="vat" value="19">19%
         <input type="radio" id="vat" name="vat" value="21" checked>21%
         <br>
-        <input type="submit">
+        <input type="submit" value="Calculate">
     </form>
     <br>
     <form>
