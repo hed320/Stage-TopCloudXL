@@ -190,16 +190,16 @@
             -->
             <br>
             <label for="round24months">24 Months :</label>
-            <input type="text" id="24months" value="<?php echo "€".$tot_Prices[10][0]; ?>" readonly>
+            <input type="text" id="round24months" value="<?php echo "€".$tot_Prices[10][0]; ?>" readonly>
             <br>
             <label for="round36months">36 Months :</label>
-            <input type="text" id="36months" value="<?php echo "€".$tot_Prices[10][1]; ?>" readonly>
+            <input type="text" id="round36months" value="<?php echo "€".$tot_Prices[10][1]; ?>" readonly>
             <br>
             <label for="round48months">48 Months :</label>
-            <input type="text" id="48months" value="<?php echo "€".$tot_Prices[10][2]; ?>" readonly>
+            <input type="text" id="round48months" value="<?php echo "€".$tot_Prices[10][2]; ?>" readonly>
             <br>
             <label for="round60months">60 Months :</label>
-            <input type="text" id="60months" value="<?php echo "€".$tot_Prices[10][3]; ?>" readonly>
+            <input type="text" id="round60months" value="<?php echo "€".$tot_Prices[10][3]; ?>" readonly>
             <br>
             <label for="round24monthsvat">24 Months inc VAT:</label>
             <input type="text" id="round24monthsvat" value="<?php echo "€".$tot_Prices[11][0]; ?>" readonly>
