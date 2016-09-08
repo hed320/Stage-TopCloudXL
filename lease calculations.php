@@ -55,7 +55,7 @@
                 $factortime = 2;
             } else if ($x == 60) {
                 $factortime = 3;
-            }
+            };
             $tot_Prices[3] = $factor[$factortime][$factornum];
             array_push($quarterly, round((($sales_Price + $insurance + ($x * $monthly_Costs)) * $tot_Prices[3] / 100), 2));
             $x += 12;
@@ -181,8 +181,8 @@
                 if (isset($_POST["itemname"]) and isset($_POST["buyprice"])) {
                     echo "<br>";
                     echo '<a href="'.$_POST["itemname"].'.json">JSON</a>';
-                }
-                ?>
+                };
+            ?>
     </form>
 </body>
 </html>
