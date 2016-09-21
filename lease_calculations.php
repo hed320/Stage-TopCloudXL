@@ -17,7 +17,8 @@
         array("Quarterly", "24", "36", "48", "60"),
         array("Monthly", "24", "36", "48", "60"),
         array("Monthly Round", "24", "36", "48", "60"),
-        array("Monthly Round inc VAT", "24", "36", "48", "60")
+        array("Monthly Round inc VAT", "24", "36", "48", "60"),
+        array("Monthly Round inc VAT webshop prices", "24", "36", "48", "60")
     );
 
     function calc_sales_price ($buyprice, $margin) {
@@ -87,6 +88,20 @@
         return $monthly_rounded_VAT;
     };
 
+    function calc_round_monthly_vat_diff ($monthly_Array) {
+        $monthly_rounded_VAT_diff = array();
+        $temp = null;
+        for ($x = 0; $x < count($monthly_Array); $x++) {
+            if ($x == 0) {
+                array_push($monthly_rounded_VAT_diff, 0);
+                $temp = $monthly_Array[$x];
+            } else {
+                array_push($monthly_rounded_VAT_diff, $monthly_Array[$x] - $temp);
+            };
+        };
+        return array_reverse($monthly_rounded_VAT_diff);
+    };
+
     function calc_prizes ($itemname, $buyprice, $margin, $insurance, $monthly_Costs, $vat) {
         global $tot_Prices;
         $tot_Prices[0] = $itemname;
@@ -101,6 +116,7 @@
         $tot_Prices[9] = calc_monthly($tot_Prices[8]);
         $tot_Prices[10] = calc_round_monthly($tot_Prices[9]);
         $tot_Prices[11] = calc_round_monthly_vat($tot_Prices[10], $vat);
+        $tot_Prices[12] = calc_round_monthly_vat_diff(array_reverse($tot_Prices[11]));
 
         //convert to json
         $filename = $itemname.'.json';
@@ -198,6 +214,7 @@
             <br>
             <label for="round60months">60 Months :</label>
             <input type="text" id="round60months" value="<?php echo "€".$tot_Prices[10][3]; ?>" readonly>
+            <!--
             <br>
             <label for="round24monthsvat">24 Months inc VAT:</label>
             <input type="text" id="round24monthsvat" value="<?php echo "€".$tot_Prices[11][0]; ?>" readonly>
@@ -210,6 +227,19 @@
             <br>
             <label for="round60monthsvat">60 Months inc VAT:</label>
             <input type="text" id="round60monthsvat" value="<?php echo "€".$tot_Prices[11][3]; ?>" readonly>
+            -->
+            <br>
+            <label for="round24monthsvatdiff">24 Months inc VAT diff:</label>
+            <input type="text" id="round24monthsvatdiff" value="<?php echo "€".$tot_Prices[12][0]; ?>" readonly>
+            <br>
+            <label for="round36monthsvatdiff">36 Months inc VAT diff:</label>
+            <input type="text" id="round36monthsvatdiff" value="<?php echo "€".$tot_Prices[12][1]; ?>" readonly>
+            <br>
+            <label for="round48monthsvatdiff">48 Months inc VAT diff:</label>
+            <input type="text" id="round48monthsvatdiff" value="<?php echo "€".$tot_Prices[12][2]; ?>" readonly>
+            <br>
+            <label for="round60monthsvatdiff">60 months base price VAT:</label>
+            <input type="text" id="round60monthsvatdiff" value="<?php echo "€".$tot_Prices[11][3]; ?>" readonly>
             <?php
                 if (isset($_POST["itemname"]) and isset($_POST["buyprice"])) {
                     echo "<br>";
