@@ -26,15 +26,15 @@
     };
 
     function get_factor ($buyprice) {
-        if ($buyprice <= 2500) {
+        if ($buyprice < 2500) {
             return 1;
-        } else if ($buyprice >= 2500 and $buyprice <= 5000) {
+        } else if ($buyprice >= 2500 and $buyprice < 5000) {
             return 2;
-        } else if ($buyprice >= 5000 and $buyprice <=  10000) {
+        } else if ($buyprice >= 5000 and $buyprice <  10000) {
             return 3;
-        } else if ($buyprice >= 10000 and $buyprice <= 25000) {
+        } else if ($buyprice >= 10000 and $buyprice < 25000) {
             return 4;
-        } else if ($buyprice >= 25000 and $buyprice <=  50000) {
+        } else if ($buyprice >= 25000 and $buyprice <  50000) {
             return 5;
         } else if ($buyprice >= 50000) {
             return 6;
