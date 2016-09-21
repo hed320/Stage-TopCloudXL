@@ -90,13 +90,11 @@
 
     function calc_round_monthly_vat_diff ($monthly_Array) {
         $monthly_rounded_VAT_diff = array();
-        $temp = null;
         for ($x = 0; $x < count($monthly_Array); $x++) {
             if ($x == 0) {
-                array_push($monthly_rounded_VAT_diff, 0);
-                $temp = $monthly_Array[$x];
+                array_push($monthly_rounded_VAT_diff, $monthly_Array[$x]);
             } else {
-                array_push($monthly_rounded_VAT_diff, $monthly_Array[$x] - $temp);
+                array_push($monthly_rounded_VAT_diff, $monthly_Array[$x] - $monthly_Array[0]);
             };
         };
         return array_reverse($monthly_rounded_VAT_diff);
@@ -239,7 +237,7 @@
             <input type="text" id="round48monthsvatdiff" value="<?php echo "€".$tot_Prices[12][2]; ?>" readonly>
             <br>
             <label for="round60monthsvatdiff">60 months base price VAT:</label>
-            <input type="text" id="round60monthsvatdiff" value="<?php echo "€".$tot_Prices[11][3]; ?>" readonly>
+            <input type="text" id="round60monthsvatdiff" value="<?php echo "€".$tot_Prices[12][3]; ?>" readonly>
             <?php
                 if (isset($_POST["itemname"]) and isset($_POST["buyprice"])) {
                     echo "<br>";
